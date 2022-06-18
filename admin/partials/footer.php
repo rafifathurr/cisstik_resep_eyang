@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+   <body>
+      <!-- jQery -->
+      <script src="../js/jquery-3.4.1.min.js"></script>
+      <!-- popper js -->
+      <script src="../js/popper.min.js"></script>
+      <!-- bootstrap js -->
+      <script src="../js/bootstrap.js"></script>
+      <!-- custom js -->
+      <script src="../js/custom.js"></script>
+      <script src="../dist/sweetalert2.all.min.js"></script>
+   </body>
+</html>
