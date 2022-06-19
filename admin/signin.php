@@ -1,55 +1,66 @@
-<!-- <?php
+<?php
 
-// // Call Session
-// session_start();
-// if(isset($_SESSION["signin"])){
-//    header("Location: index.php");
-//    exit;
-// }
+require '../function/function.php';
 
-// require '../function/function.php';
+if(isset($_SESSION["signin"])){
+   header("Location: neworder.php");
+   exit;
+}
 
-// if(isset($_POST["signin"])){
+if(isset($_POST["signin"])){
 
-//    $email = $_POST["email"];
-//    $password = $_POST["password"];
+   $username = $_POST["username"];
+   $password = $_POST["password"];
    
-//    $query = "SELECT * FROM user 
-//                WHERE email = '$email'";
+   $query = "SELECT * FROM admin 
+               WHERE username = '$username'";
 
-//    $result = mysqli_query($conn, $query);
+   $result = mysqli_query($conn, $query);
 
-//    // cek username
-//    if( mysqli_num_rows($result) === 1){
+   // cek username
+   if( mysqli_num_rows($result) === 1){
 
-//        // cek password
-//        $row = mysqli_fetch_assoc($result);
-//        if(password_verify($password, $row["password"])){
-//          $_SESSION["signin"] = true;
-//          $_SESSION["email"] = $email;
-//          echo "
-//             <script type='text/javascript'>
-//             setTimeout(function () { Swal.fire('Login Successfully', 
-//                '', 
-//                'success').then(function (result) {
-//                if (result.value) {
-//                   window.location = 'index.php';
-//                   }
-//             })}, 100);
-//             </script>
-//             ";
-//        }else{
-//          echo "
-//          <script type='text/javascript'>
-//             setTimeout(function () { Swal.fire('Login Failed!', 
-//                'Invalid Email or Password!', 
-//                'error')}, 100);
-//             </script>
-//          ";
-//        }
-//    }
-// }
-?> -->
+       // cek password
+       $row = mysqli_fetch_assoc($result);
+       if(password_verify($password, $row["password"])){
+         $_SESSION["signin"] = true;
+         echo "
+      <script type='text/javascript'>
+         setTimeout(function () { 
+            let timerInterval
+            Swal.fire({
+               title: 'Please Wait!',
+               timer: 1500,
+               didOpen: () => {
+               Swal.showLoading()
+               const b = Swal.getHtmlContainer().querySelector('b')
+               timerInterval = setInterval(() => {
+               b.textContent = Swal.getTimerLeft()
+               }, 1000)
+               },
+               willClose: () => {
+               clearInterval(timerInterval)
+               }
+               }).then((result) => {
+               if (result.dismiss === Swal.DismissReason.timer) {
+                  window.location='neworder.php';
+               }
+               })}, 100);
+         </script>";
+         
+       }else{
+         $_SESSION["email"] = '';
+         echo "
+         <script type='text/javascript'>
+            setTimeout(function () { Swal.fire('Login Failed!', 
+               'Invalid Email or Password!', 
+               'error')}, 100);
+            </script>
+         ";
+       }
+   }
+}
+?>
 <!DOCTYPE html>
 <html>
    <!-- include head  -->
@@ -65,7 +76,7 @@
                <img src="../images/Logo-Header-Admin.png" alt="">
                <div class="form-input">
                   <h6>Email</h6>
-                  <input type="text" id="email" name="email" required>
+                  <input type="text" id="username" name="username" required>
                </div>
                <div class="form-input">
                   <h6>Password</h6>

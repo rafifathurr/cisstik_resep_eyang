@@ -80,16 +80,17 @@ if(!isset($_SESSION["signin"])){
                      <h5>Status Order</h5>
                      <h5>No Resi</h5>
                   </div>
+                  <?php $resi = 1234567?>
                   <div class="right-side-summary">
                      <h5 style="text-transform: uppercase;" class="status">Delivered</h5>
-                     <h5 style="text-transform: uppercase;">JNT 1234567</h5>
+                     <h5 style="text-transform: uppercase;">JNT <?=$resi?></h5>
                   </div>
             </div>
          </section>
 
-         <form action="track.php" method="POST" class="layout-btn-checkout-payment">
+            <a href="https://cekresi.com/?noresi=<?=$resi?>" class="layout-btn-checkout-payment" target ="_blank">
                <input type="submit" class="btn-checkout-payment" value="TRACK SHIPPING">
-            </form>
+            </a>
         
       </div>
 

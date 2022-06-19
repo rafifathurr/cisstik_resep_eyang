@@ -6,6 +6,9 @@ else:
    $mail ='';
 endif;
 
+$result = account($mail);
+$id = id($mail);
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -36,7 +39,6 @@ endif;
                               <img width="25" <?php echo ($currentPage == 'Cart') ? "src='images/cart-active.svg'" : "src='images/cart.svg'"; ?> alt="#" />
                            </a>
                         </li>
-                        <?php $result = account($mail);?>
                         <?php if(mysqli_num_rows($result) === 1):?>
                         <?php echo '<li class="nav-item">
                            <a class="nav-link" href="account.php" name="account">

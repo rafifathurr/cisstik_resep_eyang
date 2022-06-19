@@ -4,6 +4,14 @@ if(!isset($_SESSION["signin"])){
     header("Location: signin.php");
     exit;
 }
+if(isset($_SESSION["email"])):
+   $mail = $_SESSION["email"];
+else:
+   $mail ='';
+endif;
+
+$result = account($mail);
+$id = id($mail);
 
 ?>
 <!DOCTYPE html>

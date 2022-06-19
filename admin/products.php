@@ -1,4 +1,10 @@
 <?php 
+
+require '../function/function.php';
+if(!isset($_SESSION["signin"])){
+   header("Location: signin.php");
+   exit;
+}
 if(isset($_POST['tambah'])){
    echo "
    <script type='text/javascript'>
@@ -37,6 +43,7 @@ if(isset($_POST['tambah'])){
    </script>
    ";
 }
+
 ?>
 <!DOCTYPE html>
 <html>
