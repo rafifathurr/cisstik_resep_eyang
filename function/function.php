@@ -132,7 +132,7 @@ function addshipping($data){
     global $conn;
 
     $recipient = stripslashes($data["recipient"]);
-    $phone = (int)stripslashes($data["phone"]);
+    $phone = stripslashes($data["phone"]);
     $province = stripslashes($data["province"]);
     $city = stripslashes($data["city"]);
     $district = stripslashes($data["district"]);
@@ -320,7 +320,7 @@ function uploadpayment($data){
     }
     
     $query = "UPDATE cart_payment SET proof_payment 
-                = '$gambar', status_order = '$statusorder' 
+                = '$gambar', status_order = '$statusorder', order_date = now()
                 WHERE invoice_id =  '$invoice' and status_order ='wait payment'";
         mysqli_query($conn, $query);
 
