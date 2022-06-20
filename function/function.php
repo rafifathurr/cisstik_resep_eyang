@@ -215,6 +215,60 @@ function registrasi($data){
    return mysqli_affected_rows($conn);
 }
 
+function forgot($data){
+    global $conn;
+
+    $email = strtolower(stripslashes($data["email"]));
+
+    $query = "SELECT * FROM user 
+    WHERE email = '$email'";
+
+    $result = mysqli_query($conn, $query);
+
+    // cek username
+
+    if( mysqli_num_rows($result) === 1){
+    $num = rand(0,100000);
+
+    $query = "UPDATE user SET verification_code 
+     = '$num' WHERE email =  '$email'";
+    mysqli_query($conn, $query);
+
+    return mysqli_affected_rows($conn);
+}
+}
+
+function setpass($data){
+    global $conn;
+
+    $email = strtolower(stripslashes($data["email"]));
+    $password = mysqli_real_escape_string($conn, $data["password"]);
+    $password2 = mysqli_real_escape_string($conn, $data["password2"]);
+
+    // Cek confirmation password
+    if($password !== $password2){
+        echo "
+        <script type='text/javascript'>
+            setTimeout(function () { 
+            Swal.fire('Set Up Password Failed!', 
+            'Password not Match!', 
+            'error');},100);
+            </script>
+        ";
+            return false;
+    }
+
+    // Enkripsi password
+    $password = password_hash($password, PASSWORD_DEFAULT);
+
+    // Insert data account
+    $query = "UPDATE user SET password = '$password'
+            WHERE email = '$email'";
+    mysqli_query($conn, $query);
+
+    return mysqli_affected_rows($conn);
+}
+
 // get email
 function account($email){
     global $conn;

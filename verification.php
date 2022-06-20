@@ -2,46 +2,96 @@
 
 require 'function/function.php';
 
-if(isset($_POST["verif-signup"])){
+if(!isset($_SESSION["signin"])){
+   header("Location: signin.php");
+   exit;
+}
 
-   $email = $_SESSION["email"];
-   $code = $_POST["codeverification"];
+if(!isset($_SESSION["forgot"])){
+   if(isset($_POST["verif-signup"])){
+
+      $email = $_SESSION["email"];
+      $code = $_POST["codeverification"];
+      
+      $query = "SELECT * FROM user 
+                  WHERE email = '$email'";
    
-   $query = "SELECT * FROM user 
-               WHERE email = '$email'";
-
-   $result = mysqli_query($conn, $query);
-
-   // cek username
-   if( mysqli_num_rows($result) === 1){
-
-       // cek password
-       $row = mysqli_fetch_assoc($result);
-       if($code == $row["verification_code"]){
-         $_SESSION["signin"] = true;
-         $_SESSION["email"] = $email;
-         echo "
+      $result = mysqli_query($conn, $query);
+   
+      // cek username
+      if( mysqli_num_rows($result) === 1){
+   
+          // cek password
+          $row = mysqli_fetch_assoc($result);
+          if($code == $row["verification_code"]){
+            $_SESSION["signin"] = true;
+            $_SESSION["email"] = $email;
+            echo "
+               <script type='text/javascript'>
+               setTimeout(function () { Swal.fire('Verification Successfully', 
+                  'Enjoy Your Shop!', 
+                  'success').then(function (result) {
+                  if (result.value) {
+                     window.location = 'index.php';
+                     }
+               })}, 100);
+               </script>
+               ";
+          }else{
+            echo "
             <script type='text/javascript'>
-            setTimeout(function () { Swal.fire('Verification Successfully', 
-               'Enjoy Your Shop!', 
-               'success').then(function (result) {
-               if (result.value) {
-                  window.location = 'index.php';
-                  }
-            })}, 100);
-            </script>
+               setTimeout(function () { Swal.fire('Verification Failed!', 
+                  'Invalid Code!', 
+                  'error')}, 100);
+               </script>
             ";
-       }else{
-         echo "
-         <script type='text/javascript'>
-            setTimeout(function () { Swal.fire('Verification Failed!', 
-               'Invalid Code!', 
-               'error')}, 100);
-            </script>
-         ";
-       }
+          }
+      }
+   }
+}else{
+   if(isset($_POST["verif-signup"])){
+
+      $email = $_SESSION["email"];
+      $code = $_POST["codeverification"];
+      
+      $query = "SELECT * FROM user 
+                  WHERE email = '$email'";
+   
+      $result = mysqli_query($conn, $query);
+   
+      // cek username
+      if( mysqli_num_rows($result) === 1){
+   
+          // cek password
+          $row = mysqli_fetch_assoc($result);
+          if($code == $row["verification_code"]){
+            $_SESSION["signin"] = true;
+            $_SESSION["email"] = $email;
+            echo "
+               <script type='text/javascript'>
+               setTimeout(function () { Swal.fire('Your Account Verified!', 
+                  'Please Set Up Your Password!', 
+                  'success').then(function (result) {
+                  if (result.value) {
+                     window.location = 'setpassword.php';
+                     }
+               })}, 100);
+               </script>
+               ";
+          }else{
+            echo "
+            <script type='text/javascript'>
+               setTimeout(function () { Swal.fire('Verification Failed!', 
+                  'Invalid Code!', 
+                  'error')}, 100);
+               </script>
+            ";
+          }
+      }
    }
 }
+
+
 
 ?>
 <!DOCTYPE html>

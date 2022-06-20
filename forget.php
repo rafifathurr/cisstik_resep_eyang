@@ -1,4 +1,40 @@
-<?php require 'function/function.php';?>
+<?php 
+require 'function/function.php';
+
+if(isset($_POST["forgot"])){
+
+   $email = $_POST["email"];
+
+   if(forgot($_POST)>0){
+
+      $_SESSION["email"] = $email;
+      $_SESSION["signin"]= true;
+      $_SESSION["forgot"]= true;
+      echo "
+      <script type='text/javascript'>
+      setTimeout(function () { 
+      Swal.fire(
+      'Verification Successfully', 
+      'Please Check Your Email for Code Verification!', 
+      'success').then(function (result) {
+      if (result.value) {
+         window.location = 'verification.php';
+         }
+      })}, 100);
+      </script>
+      ";
+  }else{
+  echo"
+  <script type='text/javascript'>
+  setTimeout(function () { 
+   Swal.fire('Verification Fails!', 
+   'Your Email Not Register!', 
+   'error');},100);
+   </script>
+  ";
+  }
+}
+?>
 <!DOCTYPE html>
 <html>
    <!-- include head  -->
@@ -8,31 +44,20 @@
    <body>
       <div class="hero_area">
          <section class="login-page">
-            <div class="form-login">
+            <form action="" method="POST" class="form-login">
                <img src="images/Logo-Header.png" alt="">
                <div class="form-input">
                   <h6>Enter Your Email</h6>
-                  <input type="text" id="codeverification">
+                  <input type="text" id="email" name="email" required>
                </div>
-               <form action="" method="POST" class="layer-btn">
-                  <button type="button" class="btn-login-signup" id="btn-forgot">VERIFICATION</button>
-               </form>
-            </div>
+               <div class="layer-btn">
+                  <button class="btn-login-signup" name="forgot">VERIFICATION</button>
+               </div>
+            </form>
          </section>
       </div>
       
        <!-- include footer -->
       <?php include 'partials/footer.php'?>
-      <script>
-         const btn = document.getElementById('btn-forgot');
-         btn.addEventListener('click', function(){
-            Swal.fire("Email Verification Successfully", 
-            "Please Check Your Verification Code in Email!", 
-            "success").then(function (result) {
-               if (result.value) {
-                  window.location = "verification.php";
-                  }
-            })});
-      </script>
    </body>
 </html>
