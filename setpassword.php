@@ -1,4 +1,41 @@
-<?php require 'function/function.php';?>
+<?php 
+
+require 'function/function.php';
+
+if(!isset($_SESSION["signin"])){
+   header("Location: signin.php");
+   exit;
+}
+
+if(isset($_POST["setpass"])){
+
+   $email = $_POST["email"];
+
+   if(setpass($_POST)>0){
+      $_SESSION["email"] = $email;
+      $_SESSION["signup"] = true;
+      echo "
+      <script type='text/javascript'>
+      setTimeout(function () { Swal.fire('Password Successfully Set!', 
+         '', 
+         'success').then(function (result) {
+         if (result.value) {
+            window.location = 'index.php';
+            }
+      })}, 100);
+      </script>
+      ";
+  }else{
+      echo "
+      <script type='text/javascript'>
+      Swal.fire('Sign Up Fail!', 
+      'Please Sign Up Again!', 
+      'error')
+      </script>
+      ";
+  }
+}
+?>
 <!DOCTYPE html>
 <html>
    <!-- include head  -->
@@ -8,20 +45,23 @@
    <body>
       <div class="hero_area">
          <section class="login-page">
+            <form action="" method="post">
             <div class="form-login">
                <img src="images/Logo-Header.png" alt="">
                <div class="form-input">
                   <h6>Enter New Password</h6>
-                  <input type="password" id="password" required>
+                  <input type="hidden" name="email" value="<?=$_SESSION["email"];?>">
+                  <input type="password" name="password" required>
                </div>
                <div class="form-input">
                   <h6>Re-Password</h6>
-                  <input type="password" id="password" required>
+                  <input type="password" name="password2" required>
                </div>
-               <form action="index.php" method="POST" class="layer-btn">
-                  <input type="submit" class="btn-login-signup" value="SET PASSWORD" id="setpass">
-               </form>
+               <div class="layer-btn">
+                  <button class="btn-login-signup" name="setpass">SET PASSWORD</button>
+               </div>
             </div>
+            </form>
          </section>
       </div>
       

@@ -14,6 +14,8 @@ if(isset($_POST["register"])){
 
         if(registrasi($_POST)>0){
             $_SESSION["email"] = $email;
+            $_SESSION["signin"] = true;
+            $_SESSION["signup"] = true;
             echo "
             <script type='text/javascript'>
             setTimeout(function () { Swal.fire('Email Verification Successfully', 
