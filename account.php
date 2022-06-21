@@ -19,8 +19,8 @@ if(!isset($_SESSION["signin"])){
         
          <section class="account-section">
             <div class="detail-account">
-               <div class="part-section">
-                  <a href="myaccount.php">
+               <div class="part-section-profile">
+                  <a>
                      <img src="images/user.png" alt="">
                      <h4><?= name($mail);?></h4>
                   </a>

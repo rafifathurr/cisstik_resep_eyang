@@ -76,11 +76,11 @@ if(isset($_POST["signin"])){
                <img src="../images/Logo-Header-Admin.png" alt="">
                <div class="form-input">
                   <h6>Email</h6>
-                  <input type="text" id="username" name="username" required>
+                  <input type="text" id="username" name="username" autoCapitalize='none' required>
                </div>
                <div class="form-input">
                   <h6>Password</h6>
-                  <input type="password" id="password" name="password" required>
+                  <input type="password" id="password" name="password" autoCapitalize='none' required>
                </div>
                <button class="btn-login-signup" name="signin">SIGN IN</button>
             </div>

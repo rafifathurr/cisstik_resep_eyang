@@ -38,7 +38,7 @@ if(!isset($_SESSION["signin"])){
                   MY ORDERS
                </h2>
             </div>
-            <form method="post" class="btn-tambah">
+            <!-- <form method="post" class="btn-tambah">
                <select name="status" style="text-align:center;">
                   <option selected="true" disabled="disabled">- Choose Status -</option>   
                   <option value="waiting for confirm">Waiting For Confirm</option>
@@ -47,7 +47,7 @@ if(!isset($_SESSION["signin"])){
                </select> 
                <input type="date" id="filterdate" name="filterdate" class="date">
                <button name="filter">Filter</button>
-            </form>
+            </form> -->
 
             <table cellpadding="10" border="1" cellspacing="1" style="background-color:white;">
             <tr>

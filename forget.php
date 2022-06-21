@@ -50,7 +50,7 @@ if(isset($_POST["forgot"])){
                <img src="images/Logo-Header.png" alt="">
                <div class="form-input">
                   <h6>Enter Your Email</h6>
-                  <input type="text" id="email" name="email" required>
+                  <input type="text" id="email" name="email" autoCapitalize='none' required>
                </div>
                <div class="layer-btn">
                   <button class="btn-login-signup" name="forgot">VERIFICATION</button>

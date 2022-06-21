@@ -51,41 +51,41 @@ if(isset($_POST["payment"])){
             <div class="checkout-form-layer-1">
                <div class="recipient-form">
                   <p>Recipient Name</p>
-                  <input type="text" placeholder="Recipient Name" name="recipient" required>
+                  <input type="text" placeholder="Recipient Name" name="recipient" autoCapitalize='none' required>
                </div>
                <div class="phone-form">
                   <p>Phone Number</p>
-                  <input type="text" placeholder="Phone Number" name="phone" required>
+                  <input type="text" placeholder="Phone Number" name="phone" autoCapitalize='none' required>
                </div>
             </div>
             <div class="checkout-form-layer-2">
                <div class="province-form">
                   <p>Province</p>
-                  <input type="text" placeholder="Province" name="province" required>
+                  <input type="text" placeholder="Province" name="province" autoCapitalize='none' required>
                </div>
                <div class="city-form">
                   <p>City</p>
-                  <input type="text" placeholder="City" name="city" required>
+                  <input type="text" placeholder="City" name="city" autoCapitalize='none' required>
                </div>
                <div class="district-form">
                   <p>District</p>
-                  <input type="text" placeholder="District" name="district" required>
+                  <input type="text" placeholder="District" name="district" autoCapitalize='none' required>
                </div>
                <div class="zip-form">
                   <p>Zip Code</p>
-                  <input type="text" placeholder="Zip Code" name="zip" required>
+                  <input type="text" placeholder="Zip Code" name="zip" autoCapitalize='none' required>
                </div>
             </div>
             <div class="checkout-form-layer-3">
                <div class="address-form">
                   <p>Address</p>
-                  <input type="text" placeholder="Fill With Full Address and Number in Detail" name="address" required>
+                  <input type="text" placeholder="Fill With Full Address and Number in Detail" name="address" autoCapitalize='none' required>
                </div>
             </div>
             <div class="checkout-form-layer-4">
                <div class="note-form">
                   <p>Note Shipping</p>
-                  <input type="text" placeholder="Note Shipping" name="note">
+                  <input type="text" placeholder="Note Shipping" autoCapitalize='none' name="note">
                </div>
                <div class="shipping-form">
                   <p>Shipping-type</p>

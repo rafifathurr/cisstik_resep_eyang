@@ -53,23 +53,23 @@ if(isset($_POST["register"])){
                   <img src="images/Logo-Header.png" alt="">
                   <div class="form-input">
                      <h6>Email</h6>
-                     <input type="text" name="email" id="email" required>
+                     <input type="text" name="email" id="email" autoCapitalize='none' required>
                   </div>
                   <div class="form-input">
                      <h6>Full Name</h6>
-                     <input type="text" name="name" id="name" required>
+                     <input type="text" name="name" id="name" autoCapitalize='none' required>
                   </div>
                   <div class="form-input">
                      <h6>Phone Number</h6>
-                     <input type="text" name="phone" id="phone" required>
+                     <input type="text" name="phone" id="phone" autoCapitalize='none' required>
                   </div>
                   <div class="form-input">
                      <h6>Password</h6>
-                     <input type="password" name="password" id="password" required>
+                     <input type="password" name="password" id="password" autoCapitalize='none' required>
                   </div>
                   <div class="form-input">
                      <h6>Re-Password</h6>
-                     <input type="password" name="password2" id="password2" required>
+                     <input type="password" name="password2" id="password2" autoCapitalize='none' required>
                   </div>
                   <button class="btn-login-signup" name="register">SIGN UP</button>
                   <div class="sign-in-selection">

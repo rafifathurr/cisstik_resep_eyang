@@ -55,11 +55,11 @@ if(isset($_POST["setpass"])){
                <div class="form-input">
                   <h6>Enter New Password</h6>
                   <input type="hidden" name="email" value="<?=$_SESSION["email"];?>">
-                  <input type="password" name="password" required>
+                  <input type="password" name="password" autoCapitalize='none' required>
                </div>
                <div class="form-input">
                   <h6>Re-Password</h6>
-                  <input type="password" name="password2" required>
+                  <input type="password" name="password2" autoCapitalize='none' required>
                </div>
                <div class="layer-btn">
                   <button class="btn-login-signup" name="setpass">SET PASSWORD</button>
