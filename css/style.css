@@ -2116,6 +2116,19 @@ form textarea {
   margin-top:20px;
 }
 
+.btn-tambah select{
+  border:none;
+  border-radius:5px;
+  height:50px;
+}
+
+.btn-tambah .date{
+  margin-left:20px;
+  border:none;
+  border-radius:5px;
+  width:10%;
+}
+
 .btn-tambah button:hover{
   background-color:#C56807;
   color:white;
@@ -2123,6 +2136,7 @@ form textarea {
 }
 
 .btn-tambah button{
+  margin-left:20px;
   font-weight:600;
   border:none;
   border-radius: 5px;
@@ -2131,8 +2145,9 @@ form textarea {
 }
 
 .new-order table{
-  margin-top:5%;
+  margin-top:3%;
   width:100%;
+  margin-bottom:3%;
 }
 
 .details-order table{
@@ -2203,7 +2218,7 @@ form textarea {
   color:white;
 }
 
-.btn-layout-details .reject:hover{
+.btn-layout-details .reject:hover:enabled{
   background-color: #AD0606;
   transition: all 0.5s;
 }
@@ -2218,7 +2233,7 @@ form textarea {
   color:white;
 }
 
-.btn-layout-details .accept:hover{
+.btn-layout-details .accept:hover:enabled{
   background-color: green;
   transition: all 0.5s;
 }
@@ -2247,4 +2262,9 @@ form textarea {
   font-size: 12px;
   margin-left:-30px;
   margin-bottom:-5px;
+}
+
+.input-resi{
+  margin-top:auto;
+  margin-bottom:auto;
 }

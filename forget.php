@@ -12,17 +12,19 @@ if(isset($_POST["forgot"])){
       $_SESSION["forgot"]= true;
       echo "
       <script type='text/javascript'>
-      setTimeout(function () { 
-      Swal.fire(
-      'Verification Successfully', 
-      'Please Check Your Email for Code Verification!', 
-      'success').then(function (result) {
-      if (result.value) {
-         window.location = 'verification.php';
-         }
-      })}, 100);
-      </script>
-      ";
+         setTimeout(function () { 
+            let timerInterval
+            Swal.fire({
+               title: 'Verification Successfully',
+               text: 'Please Check Your Email for Code Verification!',
+               icon: 'success',
+               type: 'success',
+               showConfirmButton: false
+           })
+               .then(function () {
+                  window.location = 'verification.php';
+                       });}, 100);
+         </script>";
   }else{
   echo"
   <script type='text/javascript'>

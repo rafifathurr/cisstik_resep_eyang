@@ -6,7 +6,8 @@ if(!isset($_SESSION["signin"])){
    exit;
 }
 
-$neworder = query("SELECT cp.invoice_id, u.full_name as user, s.recipient, CONCAT(s.address, ' ', s.district, ' ', s.city, ' ',s.province) as address, sum(cp.total_price) as total_price
+$neworder = query("SELECT cp.invoice_id, cp.order_date, u.full_name as user, s.recipient, 
+CONCAT(s.address, ' ', s.district, ' ', s.city, ' ',s.province) as address, FORMAT(sum(cp.total_price),0) as total_price
 from cart_payment cp
 left join user u on u.user_id = cp.user_id
 left join shipping s on s.invoice_id = cp.invoice_id
@@ -22,7 +23,7 @@ order by cp.order_date DESC");
    <?php include 'partials/head.php'?>
 
    <body>
-      <div class="hero_area">
+      <div class="hero_area" style ="overflow-y: auto;">
 
          <!-- include navbar  -->
          <?php include 'partials/navbar.php'?>
@@ -33,9 +34,10 @@ order by cp.order_date DESC");
                   New Order
                </h2>
             </div>
-            <table cellpadding="10" cellspacing="1" style="background-color:white;">
+            <table cellpadding="10" border="1" cellspacing="1" style="background-color:white;">
         <tr>
             <th>No</th>
+            <th>Order Date</th>
             <th>Invoice</th>
             <th>User</th>
             <th>Recepient</th>
@@ -48,13 +50,14 @@ order by cp.order_date DESC");
         <?php foreach($neworder as $new): ?>
         <tr>
             <td><?php echo $i;?></td>
-            <td><?=$new["invoice_id"];?></td>
+            <td><?=$new["order_date"];?></td>
+            <td>INV/<?=$new["invoice_id"];?>/<?=$new["order_date"];?></td>
             <td><?=$new["user"];?></td>
             <td><?=$new["recipient"];?></td>
             <td><?=$new["address"];?></td>
-            <td><?=$new["total_price"];?></td>
+            <td style="text-align:right;">Rp. <?=$new["total_price"];?>,-</td>
             <td>
-                <a href="detailsorder.php?invoice_id=<?= $new["invoice_id"];?>">Details</a> 
+                <a href="detailsorder.php?invoice_id=<?= $new["invoice_id"]; $_SESSION["menu"]="neworder";?>">Details</a> 
             </td>
         </tr>
         <?php $i++;?>

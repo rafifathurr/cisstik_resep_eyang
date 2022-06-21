@@ -40,7 +40,7 @@ function addcart($data){
         // Insert data cart to database
         $query = "INSERT INTO cart_payment 
                 values 
-                ('','$user_id','$product_id',now(),'$invoice','$price','$qty','$total_price','$statusorder','')";
+                ('','$user_id','$product_id',now(),'$invoice','$price','$qty','$total_price','$statusorder','','')";
         mysqli_query($conn, $query);
  
         return mysqli_affected_rows($conn);
@@ -61,7 +61,7 @@ function addcart($data){
             // Insert data cart to database
             $query = "INSERT INTO cart_payment 
                     values 
-                    ('','$user_id','$product_id',now(),'$invoice','$price','$qty','$total_price','$statusorder','')";
+                    ('','$user_id','$product_id',now(),'$invoice','$price','$qty','$total_price','$statusorder','','')";
             mysqli_query($conn, $query);
      
             return mysqli_affected_rows($conn);
@@ -74,7 +74,7 @@ function addcart($data){
         // Insert data cart to database
         $query = "INSERT INTO cart_payment 
                 values 
-                ('','$user_id','$product_id',now(),'$num','$price','$qty','$total_price','$statusorder','')";
+                ('','$user_id','$product_id',now(),'$num','$price','$qty','$total_price','$statusorder','','')";
         mysqli_query($conn, $query);
  
         return mysqli_affected_rows($conn);
@@ -147,7 +147,7 @@ function addshipping($data){
     $statusorder = "checkout";
     
     $insert_ongkir = "INSERT INTO cart_payment VALUES 
-                ('','$user_id','0',now(),'$invoice','$ongkir','$qty','$ongkir','$statusorder','')";
+                ('','$user_id','0',now(),'$invoice','$ongkir','$qty','$ongkir','$statusorder','','')";
     mysqli_query($conn, $insert_ongkir);
 
     $update_status = "UPDATE cart_payment SET 
@@ -322,6 +322,56 @@ function uploadpayment($data){
     $query = "UPDATE cart_payment SET proof_payment 
                 = '$gambar', status_order = '$statusorder', order_date = now()
                 WHERE invoice_id =  '$invoice' and status_order ='wait payment'";
+        mysqli_query($conn, $query);
+
+        return mysqli_affected_rows($conn);
+
+}
+
+function acceptorder($data){
+    global $conn;
+
+    $invoice = (int)stripslashes($data["invoice"]);
+    $statusorder = "On Process";
+
+    
+    $query = "UPDATE cart_payment SET status_order 
+                = '$statusorder'
+                WHERE invoice_id =  '$invoice' and status_order ='waiting for confirm'";
+        mysqli_query($conn, $query);
+
+        return mysqli_affected_rows($conn);
+
+}
+
+function rejectorder($data){
+    global $conn;
+
+    $invoice = (int)stripslashes($data["invoice"]);
+    $statusorder = "Cancelled";
+
+    echo $statusorder;
+    
+    // $query = "UPDATE cart_payment SET status_order 
+    //             = '$statusorder'
+    //             WHERE invoice_id =  '$invoice' and status_order ='waiting for process'";
+    //     mysqli_query($conn, $query);
+
+    //     return mysqli_affected_rows($conn);
+
+}
+
+function delivery($data){
+    global $conn;
+
+    $invoice = (int)stripslashes($data["invoice"]);
+    $resi = (int)stripslashes($data["resi"]);
+    $statusorder = "Delivery";
+
+    
+    $query = "UPDATE cart_payment SET resi 
+                = '$resi', status_order = '$statusorder'
+                WHERE invoice_id =  '$invoice' and status_order ='On Process'";
         mysqli_query($conn, $query);
 
         return mysqli_affected_rows($conn);

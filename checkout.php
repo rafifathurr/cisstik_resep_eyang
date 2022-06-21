@@ -90,7 +90,7 @@ if(isset($_POST["payment"])){
                <div class="shipping-form">
                   <p>Shipping-type</p>
                   <input type="text" placeholder="REGULAR 2-3 DAYS" disabled>
-                  <input type="hidden" name="shiptype" value="REG">
+                  <input type="hidden" name="shiptype" value="JNE REG">
                </div>
             </div>
             <?php 

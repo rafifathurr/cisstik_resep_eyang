@@ -16,15 +16,19 @@ if(isset($_POST["setpass"])){
       $_SESSION["signup"] = true;
       echo "
       <script type='text/javascript'>
-      setTimeout(function () { Swal.fire('Password Successfully Set!', 
-         '', 
-         'success').then(function (result) {
-         if (result.value) {
-            window.location = 'index.php';
-            }
-      })}, 100);
-      </script>
-      ";
+         setTimeout(function () { 
+            let timerInterval
+            Swal.fire({
+               title: 'Password Successfully Set!',
+               text: '',
+               icon: 'success',
+               type: 'success',
+               showConfirmButton: false
+           })
+               .then(function () {
+                  window.location = 'index.php';
+                       });}, 100);
+         </script>";;
   }else{
       echo "
       <script type='text/javascript'>

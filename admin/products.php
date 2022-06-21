@@ -5,44 +5,8 @@ if(!isset($_SESSION["signin"])){
    header("Location: signin.php");
    exit;
 }
-if(isset($_POST['tambah'])){
-   echo "
-   <script type='text/javascript'>
-   setTimeout(function () { 
-      Swal.fire({
-         title: 'Add Product',
-         html: `
-         <form action='' method='post'>
-         <div class='form-product'>
-            <label for='product'>Name Product</label> 
-            <input type='text' id='product' class='swal2-input' placeholder='Product' require>
-         </div>
-         <div class='form-product'>
-            <label for='product'>Image</label> 
-            <input type='file' id='file' class='input-file-popup' placeholder='Product'>
-         </div>
-         <p class='format-type'>png, jpeg, jpg format only</p>
-         <div class='form-product'>
-            <label for='order'>Order Number</label> 
-            <input type='text' id='order' class='swal2-input' placeholder='Order' require>
-         </div>
-         </form>`,
-         confirmButtonText: 'Add Product',
-         confirmButtonColor: '#C56807', 
-         preConfirm: () => {
-            const product = Swal.getPopup().querySelector('#product').value
-            const file = Swal.getPopup().querySelector('#file').value
-            const order = Swal.getPopup().querySelector('#order').value
-            if (!product || !file || !order) {
-              Swal.showValidationMessage(`Please enter the data`)
-            }
-            return { product: product, file: file, order: order }
-          }
-        }).then((result) => {
-        })}, 100);
-   </script>
-   ";
-}
+
+$product = query("SELECT * from product order by order_id ASC");
 
 ?>
 <!DOCTYPE html>
@@ -70,7 +34,7 @@ if(isset($_POST['tambah'])){
                </button>
             </form>
 
-            <table cellpadding="10" cellspacing="1" style="background-color:white;">
+            <table cellpadding="10" border="1" cellspacing="1" style="background-color:white;">
                <tr>
                   <th>No</th>
                   <th>Product</th>
@@ -78,6 +42,21 @@ if(isset($_POST['tambah'])){
                   <th>Order</th>
                   <th>Action</th>
                </tr>
+
+               <?php $i=1;?>
+               <?php foreach($product as $prod): ?>
+               <tr>
+                  <td><?php echo $i;?></td>
+                  <td><?=$prod["product"];?></td>
+                  <td><?=$prod["picture"];?></td>
+                  <td><?=$prod["order_id"];?></td>
+                  <td>
+                     <a href="detailsorder.php?invoice_id=<?= $prod["id"];?>">Edit</a> 
+                     <a href="detailsorder.php?invoice_id=<?= $prod["id"];?>">Delete</a> 
+                  </td>
+               </tr>
+               <?php $i++;?>
+               <?php endforeach;?>
             </table>
          </section>
       </div>

@@ -27,16 +27,20 @@ if(!isset($_SESSION["forgot"])){
             $_SESSION["signin"] = true;
             $_SESSION["email"] = $email;
             echo "
-               <script type='text/javascript'>
-               setTimeout(function () { Swal.fire('Verification Successfully', 
-                  'Enjoy Your Shop!', 
-                  'success').then(function (result) {
-                  if (result.value) {
+            <script type='text/javascript'>
+            setTimeout(function () { 
+               let timerInterval
+               Swal.fire({
+                  title: 'Verification Successfully',
+                  text: 'Enjoy Your Shop!',
+                  icon: 'success',
+                  type: 'success',
+                  showConfirmButton: false
+              })
+                  .then(function () {
                      window.location = 'index.php';
-                     }
-               })}, 100);
-               </script>
-               ";
+                          });}, 100);
+            </script>";;
           }else{
             echo "
             <script type='text/javascript'>
@@ -68,16 +72,20 @@ if(!isset($_SESSION["forgot"])){
             $_SESSION["signin"] = true;
             $_SESSION["email"] = $email;
             echo "
-               <script type='text/javascript'>
-               setTimeout(function () { Swal.fire('Your Account Verified!', 
-                  'Please Set Up Your Password!', 
-                  'success').then(function (result) {
-                  if (result.value) {
+            <script type='text/javascript'>
+            setTimeout(function () { 
+               let timerInterval
+               Swal.fire({
+                  title: 'Please Set Up Your Password',
+                  text: '',
+                  icon: 'success',
+                  type: 'success',
+                  showConfirmButton: false
+              })
+                  .then(function () {
                      window.location = 'setpassword.php';
-                     }
-               })}, 100);
-               </script>
-               ";
+                          });}, 100);
+            </script>";
           }else{
             echo "
             <script type='text/javascript'>
