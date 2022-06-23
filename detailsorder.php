@@ -19,7 +19,7 @@ if(!isset($_SESSION["signin"])){
 
          <div class="heading_container heading_center">
                <h2>
-                  My Order
+                  Details Order
                </h2>
             </div>
 
@@ -115,9 +115,13 @@ if(!isset($_SESSION["signin"])){
             </div>
          </section>
 
+         <?php if($order["status_order"] == 'Delivery'):?>
             <a href="https://cekresi.com/?noresi=<?=$order["resi"];?>" class="layout-btn-checkout-payment" target ="_blank">
                <input type="submit" class="btn-checkout-payment" value="TRACK SHIPPING">
             </a>
+         <?php endif;?>
+
+            
         
       </div>
 

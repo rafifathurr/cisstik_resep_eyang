@@ -7,6 +7,21 @@ if(isset($_SESSION["signin"])){
    exit;
 }
 
+// cek cookie
+if(isset($_COOKIE['id'])&&isset($_COOKIE['key'])){
+   $id = $_COOKIE['id'];
+   $key = $_COOKIE['key'];
+
+   // Ambil username berdasarkan id
+   $result = mysqli_query($conn,"SELECT username from admin WHERE id = $id");
+   $row = mysqli_fetch_assoc($result);
+
+   // Cek Cookie
+   if($key === hash('sha256', $row['username'])){
+       $_SESSION['login'] = true;
+   }
+}
+
 if(isset($_POST["signin"])){
 
    $username = $_POST["username"];
@@ -24,6 +39,8 @@ if(isset($_POST["signin"])){
        $row = mysqli_fetch_assoc($result);
        if(password_verify($password, $row["password"])){
          $_SESSION["signin"] = true;
+         setcookie('id', $row['id'],time()+60);
+            setcookie('key', hash('sha256',$row['username']),time()+60);
          echo "
       <script type='text/javascript'>
          setTimeout(function () { 

@@ -7,6 +7,21 @@ if(isset($_SESSION["signin"])){
    exit;
 }
 
+// cek cookie
+if(isset($_COOKIE['id'])&&isset($_COOKIE['key'])){
+   $id = $_COOKIE['id'];
+   $key = $_COOKIE['key'];
+
+   // Ambil username berdasarkan id
+   $result = mysqli_query($conn,"SELECT email from user WHERE user_id = $id");
+   $row = mysqli_fetch_assoc($result);
+
+   // Cek Cookie
+   if($key === hash('sha256', $row['email'])){
+       $_SESSION['login'] = true;
+   }
+}
+
 if(isset($_POST["signin"])){
 
    $email = $_POST["email"];
@@ -25,6 +40,13 @@ if(isset($_POST["signin"])){
        if(password_verify($password, $row["password"])){
          $_SESSION["signin"] = true;
          $_SESSION["email"] = $email;
+         // Check Remember Me
+         if(isset($_POST['remember'])){
+            // membuat cookie
+
+            setcookie('id', $row['id'],time()+60);
+            setcookie('key', hash('sha256',$row['email']),time()+60);
+        }
          echo "
       <script type='text/javascript'>
          setTimeout(function () { 
@@ -84,7 +106,7 @@ if(isset($_POST["signin"])){
                </div>
                <div class="additional-section">
                   <div class="remember-me-section">
-                     <input type="checkbox" id="cookie">
+                     <input type="checkbox" id="cookie" name="cookie">
                      <p>Remember Me</p>
                   </div>
                   <div class="forget-password-section">

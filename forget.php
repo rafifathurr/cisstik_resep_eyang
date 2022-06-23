@@ -16,13 +16,13 @@ if(isset($_POST["forgot"])){
             let timerInterval
             Swal.fire({
                title: 'Verification Successfully',
-               text: 'Please Check Your Email for Code Verification!',
+               text: 'Please Set Up Your Password!',
                icon: 'success',
                type: 'success',
                showConfirmButton: false
            })
                .then(function () {
-                  window.location = 'verification.php';
+                  window.location = 'setpassword.php';
                        });}, 100);
          </script>";
   }else{

@@ -18,15 +18,19 @@ if(isset($_POST["register"])){
             $_SESSION["signup"] = true;
             echo "
             <script type='text/javascript'>
-            setTimeout(function () { Swal.fire('Email Verification Successfully', 
-               'Please Check Your Verification Code in Email!', 
-               'success').then(function (result) {
-               if (result.value) {
-                  window.location = 'verification.php';
-                  }
-            })}, 100);
-            </script>
-            ";
+               setTimeout(function () { 
+                  let timerInterval
+                  Swal.fire({
+                     title: 'Sign Up Successfully!',
+                     text: '',
+                     icon: 'success',
+                     type: 'success',
+                     showConfirmButton: false
+                 })
+                     .then(function () {
+                        window.location = 'index.php';
+                             });}, 100);
+               </script>";
         }else{
             echo "
             <script type='text/javascript'>

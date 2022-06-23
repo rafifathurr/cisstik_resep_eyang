@@ -204,12 +204,11 @@ function registrasi($data){
 
    // Enkripsi password
    $password = password_hash($password, PASSWORD_DEFAULT);
-   $num = rand(0,100000);
 
    // Insert data account
    $query = "INSERT INTO user 
                values 
-               ('','$email','$fullname','$phone','$password','','$num')";
+               ('','$email','$fullname','$phone','$password')";
    mysqli_query($conn, $query);
 
    return mysqli_affected_rows($conn);
@@ -228,11 +227,6 @@ function forgot($data){
     // cek username
 
     if( mysqli_num_rows($result) === 1){
-    $num = rand(0,100000);
-
-    $query = "UPDATE user SET verification_code 
-     = '$num' WHERE email =  '$email'";
-    mysqli_query($conn, $query);
 
     return mysqli_affected_rows($conn);
 }
@@ -419,9 +413,44 @@ function upload(){
     $namaFileBaru .= '.';
     $namaFileBaru .= $extensiPict;
 
-    move_uploaded_file($tmpName, 'img/' . $namaFileBaru);
+    move_uploaded_file($tmpName, '../img/' . $namaFileBaru);
 
     return $namaFileBaru;
+}
+
+function addproduct($data){
+    global $conn;
+ 
+    $product = stripslashes($data["product"]);
+    $price = (int)stripslashes($data["price"]);
+    $ordering = (int)stripslashes($data["order"]);
+    $status = "ready";
+
+    // Upload gambar
+    $gambar = upload();
+    if(!$gambar){
+        return false;
+    }
+
+        // Insert data cart to database
+        $query = "INSERT INTO product 
+                values 
+                ('','$gambar','$product','$price','$status','$ordering')";
+        mysqli_query($conn, $query);
+ 
+        return mysqli_affected_rows($conn);
+}
+
+// remove item on cart
+function removeproduct($data){
+    global $conn;
+    $id_product = (int)stripslashes($data["id"]);
+
+    $query = "DELETE FROM product WHERE id = $id_product";
+        mysqli_query($conn, $query);
+
+        return mysqli_affected_rows($conn);
+
 }
 
 function notification($notif){

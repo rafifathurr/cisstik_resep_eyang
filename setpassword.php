@@ -28,7 +28,7 @@ if(isset($_POST["setpass"])){
                .then(function () {
                   window.location = 'index.php';
                        });}, 100);
-         </script>";;
+         </script>";
   }else{
       echo "
       <script type='text/javascript'>

@@ -1,7 +1,18 @@
-function search(ele) {
-    if(event.key === 'Enter') { 
+
+function filter() {
+
+        var status = document.getElementById("status");
+        var date = document.getElementById("filterdate");
+        var id = document.getElementById("id");
+        var container = document.getElementById('container');
+       
+        var stat = status.value;
+        var id = id.value;
+
+
         // buat object AJAX
         var xhr = new XMLHttpRequest();
+        var xhr2 = new XMLHttpRequest();
 
         // cek AJAX
         xhr.onreadystatechange = function(){
@@ -10,8 +21,13 @@ function search(ele) {
             }
         };
 
+        xhr2.onreadystatechange = function(){
+            if(xhr2.readyState == 4 && xhr2.status == 200){
+                container.innerHTML = xhr2.responseText;
+                }
+            };
+
         // eksekusi AJAX
-        xhr.open('GET','ajax/process.php?resi=' + ele.value,true);
-        xhr.send();    
-    }
+        xhr.open('GET','order.php?status=' + stat + '&id=' + id , true);
+        xhr.send(); 
 }

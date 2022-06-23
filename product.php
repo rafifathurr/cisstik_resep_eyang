@@ -53,7 +53,7 @@ if(isset($_POST["add"])){
                            </form>
                      </div>
                      <div class="img-box">
-                        <img src="images/bg-home.jpg" alt="">
+                        <img src="img/<?php echo $row["picture"];?>" alt="">
                      </div>
                      <div class="detail-box">
                         <h5>
