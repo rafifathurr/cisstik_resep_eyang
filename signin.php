@@ -81,6 +81,15 @@ if(isset($_POST["signin"])){
             </script>
          ";
        }
+   }else{
+      $_SESSION["email"] = '';
+         echo "
+         <script type='text/javascript'>
+            setTimeout(function () { Swal.fire('Login Failed!', 
+               'Your Email Not Register!', 
+               'error')}, 100);
+            </script>
+         ";
    }
 }
 ?>

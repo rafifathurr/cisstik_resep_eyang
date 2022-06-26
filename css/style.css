@@ -1631,10 +1631,11 @@ form textarea {
 }
 
 .payment-section{
-  display: flex;
-  padding-left: 5%;
-  padding-right: 5%;
-  margin-bottom:30px;
+  min-height: 100vh;
+    display: flex;
+    padding-left: 4%;
+    padding-right: 5%;
+    margin-bottom: 30px;
 }
 
 .vertical-line{
@@ -1647,6 +1648,8 @@ form textarea {
   left: 0px;
   width: 50%;
   padding-right: 5%;
+  margin-top:auto;
+  margin-bottom:auto;
 }
 
 .left-half-payment h6{

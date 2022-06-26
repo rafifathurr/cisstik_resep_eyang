@@ -514,7 +514,7 @@ function updateproduct($data){
     $status = "ready";
 
     // Upload gambar
-    $gambar = upload();
+    $gambar = uploadproduct();
     if(!$gambar){
         return false;
     }
