@@ -130,6 +130,7 @@ a:focus {
 }
 
 .hero_area_cart {
+  min-height: 100vh;
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
