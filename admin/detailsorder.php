@@ -25,38 +25,46 @@ if(isset($_POST["accept"])){
                        });}, 100);
          </script>";
    }
-   // if(rejectorder($_POST)>0){
-   //    echo "
-   //    <script type='text/javascript'>
-   //       setTimeout(function () { 
-   //          let timerInterval
-   //          const swalWithBootstrapButtons = Swal.mixin({
-   //             customClass: {
-   //               confirmButton: 'btn btn-success',
-   //               cancelButton: 'btn btn-danger'
-   //             },
-   //             buttonsStyling: false
-   //           })
-             
-   //           swalWithBootstrapButtons.fire({
-   //             title: 'Are you sure?',
-   //             text: 'You want to cancel this order!',
-   //             icon: 'warning',
-   //             showCancelButton: true,
-   //             confirmButtonText: 'Cancel Order',
-   //             cancelButtonText: 'No',
-   //             reverseButtons: true
-   //           }).then((result) => {
-   //             if (result.isConfirmed) {
-   //               swalWithBootstrapButtons.fire(
-   //                 'Cancelled!',
-   //                 'Your file has been deleted.',
-   //                 'success'
-   //               )
-   //             }
-   //           });}, 100);
-   //       </script>";
-   // }
+}
+
+if(isset($_POST["rejected"])){
+
+   if($_POST["reason"]==""){
+      echo "
+         <script type='text/javascript'>
+            setTimeout(function () { 
+               Swal.fire('Input Reason!', 
+               'Rejecting Must Input Reason!', 
+               'error')}, 100);
+            </script>
+         ";
+   }else{
+      if(reject($_POST)>0){
+         echo "
+         <script type='text/javascript'>
+            setTimeout(function () { 
+               let timerInterval
+               Swal.fire({
+                  title: 'Order Succesfully Cancelled!',
+                  text: '',
+                  icon: 'success',
+                  type: 'success',
+                  showConfirmButton: false
+              })
+                  .then(function () {
+                     window.location = 'process.php';
+                          });}, 100);
+            </script>";
+      }
+   }
+}
+
+if(isset($_POST["reject"])){
+   $_SESSION["menu"]="reject";
+}
+
+if(isset($_POST["back"])){
+   $_SESSION["menu"]="neworder";
 }
 
 if($_SESSION["menu"]=="neworder"){
@@ -95,8 +103,26 @@ if($_SESSION["menu"]=="neworder"){
    where cp.status_order = 'On Process'and cp.invoice_id = $invoice
    group by cp.product_id, cp.invoice_id order by cp.id asc");
 
-}else{
-   $invoice = $_GET["invoice_id"];
+}else if($_SESSION["menu"]=="reject"){
+   $invoice = $_GET["invoice_id"]; 
+   $shipping = query("SELECT cp.invoice_id, s.recipient, cp.order_date, 
+   CONCAT(s.address, ' ', s.district, ' ', s.city, ' ',s.province) as address, u.full_name as user, cp.proof_payment as gambar
+   from cart_payment cp
+   left join user u on u.user_id = cp.user_id
+   left join shipping s on s.invoice_id = cp.invoice_id
+   where cp.invoice_id = $invoice
+   group by cp.invoice_id");
+   
+   $details = query("SELECT CASE WHEN cp.product_id != 0 THEN p.product 
+   WHEN cp.product_id = 0 THEN 'Ongkos Kirim' END as product, 
+   FORMAT(cp.price,0) as price, sum(cp.qty) as qty , FORMAT(sum(cp.total_price),0) as total_price, cp.proof_payment as gambar
+   from cart_payment cp
+   left join product p on p.id = cp.product_id
+   where cp.invoice_id = $invoice
+   group by cp.product_id, cp.invoice_id order by cp.id asc");
+
+}else if($_SESSION["menu"]=="delivery"){
+   $invoice = $_GET["invoice_id"]; 
    $shipping = query("SELECT cp.invoice_id, s.recipient, cp.order_date, 
    CONCAT(s.address, ' ', s.district, ' ', s.city, ' ',s.province) as address, u.full_name as user, cp.proof_payment as gambar
    from cart_payment cp
@@ -163,10 +189,12 @@ if($_SESSION["menu"]=="neworder"){
                         <h6>User : </h6>
                         <h6><?= $ship["user"];?></h6>
                      </div>
+                     <?php if($ship["gambar"]!=''):?>
                      <div class="desc">
                         <h6>Approval : </h6>
-                        <h6><a href="download.php?filename=<?php echo $ship["gambar"];?>"><?php echo $ship["gambar"];?></a></h6>
+                        <h6><a href="download_bukti.php?filename=<?php echo $ship["gambar"];?>"><?php echo $ship["gambar"];?></a></h6>
                      </div>
+                     <?php endif;?> 
                   </div>
                </div>
             </div>
@@ -202,17 +230,23 @@ if($_SESSION["menu"]=="neworder"){
             </form>
          </div>
          <?php elseif($_SESSION["menu"]=="process"):?>
-         <!-- <div class="btn-layout-details">
-         <form action="" method="POST">
-            <input type="hidden" name="invoice" id="id" value="<?=$invoice?>">
-            <button class="accept" name="deliv" >DELIVER</button>
-         </form>
-         </div> -->
+         <?php elseif($_SESSION["menu"]=="reject"):?>
+            <div class="btn-layout-details-reject">
+            <form action="" method="POST">
+               <input type="hidden" name="invoice" id="id" value="<?=$invoice?>">
+               <input type="text" name="reason" placeholder="Reason Why The Order be Cancelled">
+               </div>
+               <div class="btn-layout-details-details">
+                  <button class="accept" name="back" >BACK</button>
+                  <button class="reject" name="rejected" >REJECT</button>
+               </div>
+            </form>
+         
          <?php else:?>
          <div class="btn-layout-details">
             <button typw="button" class="accept" name="deliv" disabled>ON DELIVERY</button>
          </div>
-         <?php endif;?>
+            <?php endif;?>
       </div>
       
        <!-- include footer -->

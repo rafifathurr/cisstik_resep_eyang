@@ -9,7 +9,6 @@ if(isset($_POST["register"])){
     $phone = $_POST["phone"];
     $password = $_POST["password"];
     $password2 = $_POST["password2"];
-
     
 
         if(registrasi($_POST)>0){

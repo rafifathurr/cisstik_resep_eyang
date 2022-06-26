@@ -6,6 +6,10 @@ if(!isset($_SESSION["signin"])){
    exit;
 }
 
+if(isset($_POST["kembali"])){
+   header("Location: products.php");
+}
+
 if(isset($_POST["add"])){
    if(addproduct($_POST)>0){
       echo "
@@ -14,6 +18,26 @@ if(isset($_POST["add"])){
                   let timerInterval
                   Swal.fire({
                      title: 'Product Successfully Added!',
+                     text: '',
+                     icon: 'success',
+                     type: 'success',
+                     showConfirmButton: false
+                 })
+                     .then(function () {
+                        window.location = 'products.php';
+                             });}, 100);
+               </script>";
+   }
+}
+
+if(isset($_POST["edit"])){
+   if(updateproduct($_POST)>0){
+      echo "
+            <script type='text/javascript'>
+               setTimeout(function () { 
+                  let timerInterval
+                  Swal.fire({
+                     title: 'Product Successfully Updated!',
                      text: '',
                      icon: 'success',
                      type: 'success',
@@ -55,30 +79,62 @@ $product = query("SELECT * from product order by order_id ASC");
             </form>
 
             <?php if(isset($_POST["tambah"])):?>
-            <div>
+            <div class="add-product">
                <form method="post" enctype="multipart/form-data">
-                  <div>
+                  <div class="add-product-details">
                      <label for="product">Name Product</label>
                      <input type="text" id="product" name="product">
                   </div>
-                  <div>
+                  <div class="add-product-details">
                      <label for="upload">Upload File</label>
                      <input type="file" id="upload" name="upload">
                   </div>
-                  <div>
+                  <div class="add-product-details">
                      <label for="price">Price</label>
                      <input type="text" id="price" name="price">
                   </div>
-                  <div>
+                  <div class="add-product-details">
                      <label for="order">Ordering</label>
                      <input type="text" id="order" name="order">
-                  </div>         
-                  <button name="kembali">Kembali</button>
-                  <button name="add">Add Product</button>
+                  </div>
+                  <div class="button-add-product">
+                     <button name="kembali" class="kembali">Back</button>
+                     <button name="add" class="edit-add">Add Product</button>
+                  </div>      
                </form>
             </div>
-            <?php elseif(isset($_POST["kembali"])):?>
-               <?php endif;?>
+            <?php elseif(isset($_GET["id"])):
+               $id = $_GET["id"];
+               $edits = query("SELECT * from product WHERE id = $id order by order_id ASC");
+               foreach($edits as $edit):?>
+            <div class="add-product">
+               <form method="post" enctype="multipart/form-data">
+                  <div class="add-product-details">
+                     <label for="product">Name Product</label>
+                     <input type="text" id="product" name="product" value="<?=$edit['product']?>">
+                  </div>
+                  <div class="add-product-details">
+                     <label for="upload">Upload File</label>
+                     <input type="file" id="upload" name="upload" value="<?=$edit['picture']?>">
+                     <a href="download.php?filename=<?=$edit['picture']?>"><?=$edit['picture']?></a>
+                  </div>
+                  <div class="add-product-details">
+                     <label for="price">Price</label>
+                     <input type="text" id="price" name="price" value="<?=$edit['price']?>">
+                  </div>
+                  <div class="add-product-details">
+                     <label for="order">Ordering</label>
+                     <input type="text" id="order" name="order" value="<?=$edit['order_id']?>">
+                     <input type="hidden" id="id" name="id" value="<?=$id?>">
+                  </div> 
+                  <div class="button-add-product">        
+                     <button name="kembali" class="kembali">Back</button>
+                     <button name="edit" class="edit-add">Edit Product</button>
+                  </div>
+               </form>
+            </div>
+            <?php endforeach;?>
+            <?php endif;?>
             
 
             <table cellpadding="10" border="1" cellspacing="1" style="background-color:white;">
@@ -100,7 +156,7 @@ $product = query("SELECT * from product order by order_id ASC");
                   <td>Rp. <?=$prod["price"];?>,-</td>
                   <td><?=$prod["order_id"];?></td>
                   <td>
-                     <a href="detailsorder.php?invoice_id=<?= $prod["id"];?>">Edit</a> 
+                     <a href="products.php?id=<?= $prod["id"];?>">Edit</a> 
                      <a href="deletedproduct.php?id=<?= $prod["id"];?>">Delete</a> 
                   </td>
                </tr>

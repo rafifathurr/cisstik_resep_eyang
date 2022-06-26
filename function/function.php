@@ -338,20 +338,25 @@ function acceptorder($data){
 
 }
 
-function rejectorder($data){
+// upload proof payment
+function reject($data){
     global $conn;
 
     $invoice = (int)stripslashes($data["invoice"]);
-    $statusorder = "Cancelled";
+    $reason = stripslashes($data["reason"]);
+    $statusorder = "cancel";
 
-    echo $statusorder;
+    $query_2 = "INSERT INTO reject VALUES 
+                ('','$invoice','$reason')";
+        mysqli_query($conn, $query_2);
     
-    // $query = "UPDATE cart_payment SET status_order 
-    //             = '$statusorder'
-    //             WHERE invoice_id =  '$invoice' and status_order ='waiting for process'";
-    //     mysqli_query($conn, $query);
+    $query = "UPDATE cart_payment SET status_order = '$statusorder'
+                WHERE invoice_id =  '$invoice'";
+        mysqli_query($conn, $query);
 
-    //     return mysqli_affected_rows($conn);
+    
+
+        return mysqli_affected_rows($conn);
 
 }
 
@@ -383,7 +388,7 @@ function upload(){
     // Cek apakah tidak ada gambar yang diupload
     if( $error === 4){ 
         echo "<script>
-                alert('Please Upload Your Proof Payment!')
+                alert('Please Upload!')
                 </script>";
         return false;        
     }
@@ -400,9 +405,55 @@ function upload(){
     }
 
     // cek jika ukurannya terlalu besar
-    if($ukuranFile > 1000000){
+    if($ukuranFile > 20000000){
         echo "<script>
-                alert('Size Image Min 1 MB !')
+                alert('Size Image Min 20 MB !')
+                </script>";
+        return false; 
+    }
+
+    // Upload gambar setelah pengecekan
+    // generate nama file baru
+    $namaFileBaru = 'bukti_transfer_'.$namaFile;
+    $namaFileBaru .= '.';
+    $namaFileBaru .= $extensiPict;
+
+    move_uploaded_file($tmpName, 'bukti_transfer/' . $namaFileBaru);
+
+    return $namaFileBaru;
+}
+
+// upload image
+function uploadproduct(){
+    
+    $namaFile = $_FILES['upload']['name'];
+    $ukuranFile = $_FILES['upload']['size'];
+    $error = $_FILES['upload']['error'];
+    $tmpName = $_FILES['upload']['tmp_name'];
+
+    // Cek apakah tidak ada gambar yang diupload
+    if( $error === 4){ 
+        echo "<script>
+                alert('Please Upload!')
+                </script>";
+        return false;        
+    }
+
+    // Cek apakah yang diupload adalah gambar
+    $extensionGambar = ['jpg', 'jpeg', 'png'];
+    $extensiPict = explode('.', $namaFile);
+    $extensiPict = strtolower(end($extensiPict));
+    if( !in_array($extensiPict,$extensionGambar)){
+        echo "<script>
+                alert('Choose image only!')
+                </script>";
+        return false;  
+    }
+
+    // cek jika ukurannya terlalu besar
+    if($ukuranFile > 10000000){
+        echo "<script>
+                alert('Size Image Min 10 MB !')
                 </script>";
         return false; 
     }
@@ -427,7 +478,7 @@ function addproduct($data){
     $status = "ready";
 
     // Upload gambar
-    $gambar = upload();
+    $gambar = uploadproduct();
     if(!$gambar){
         return false;
     }
@@ -451,6 +502,30 @@ function removeproduct($data){
 
         return mysqli_affected_rows($conn);
 
+}
+
+function updateproduct($data){
+    global $conn;
+ 
+    $id = (int)stripslashes($data["id"]);
+    $product = stripslashes($data["product"]);
+    $price = (int)stripslashes($data["price"]);
+    $ordering = (int)stripslashes($data["order"]);
+    $status = "ready";
+
+    // Upload gambar
+    $gambar = upload();
+    if(!$gambar){
+        return false;
+    }
+
+        // Insert data cart to database
+        $query = "UPDATE product SET
+                   picture = '$gambar', product = '$product', price = '$price',
+                   status = '$status', order_id = '$ordering' WHERE id = '$id'";
+        mysqli_query($conn, $query);
+ 
+        return mysqli_affected_rows($conn);
 }
 
 function notification($notif){

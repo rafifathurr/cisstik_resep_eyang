@@ -23,7 +23,7 @@
                            <a class="nav-link" href="products.php">Products</a>
                         </li>
                         <li class="nav-item">
-                           <a class="nav-link-logout" href="signout.php">
+                           <a class="nav-link" style="color:red;" href="signout.php">
                               LOG OUT
                            </a> 
                         </li>

@@ -68,11 +68,11 @@ if(isset($_POST["checkout"])){
          <section class="cart-section">
             <div class="cart-section-detail">
                <?php 
-                  $show_cart = query("SELECT p.id, cp.invoice_id, p.product, SUM(cp.qty) as qty, cp.price as price FROM cart_payment cp LEFT JOIN product p ON p.id = cp.product_id WHERE cp.user_id = $id AND cp.status_order='cart' GROUP BY cp.product_id");
+                  $show_cart = query("SELECT p.id, cp.invoice_id, p.product, SUM(cp.qty) as qty, cp.price, p.picture FROM cart_payment cp LEFT JOIN product p ON p.id = cp.product_id WHERE cp.user_id = $id AND cp.status_order='cart' GROUP BY cp.product_id");
                foreach($show_cart as $cart):?>
                <div class="cart-detail">
                   <div class="detail">
-                     <img src="images/bg-home.jpg" alt="">
+                     <img src="img/<?=$cart["picture"];?>" alt="">
                      <div class="description">
                         <h5><?= $cart["product"];?></h5>
                         <h5 style="font-weight:600;">Rp. <?= $cart["price"];?>,-</h5>

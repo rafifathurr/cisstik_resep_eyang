@@ -1921,6 +1921,10 @@ form textarea {
   color:green;
 }
 
+.status_2{
+  color:red;
+}
+
 .login-page{
   margin:auto;
   background-color:#F8E6B9;
@@ -2235,6 +2239,7 @@ form textarea {
   margin-left:auto;
   margin-right:auto;
   margin-top:20px;
+  margin-bottom:20px;
   position: relative;
 }
 
@@ -2313,4 +2318,104 @@ form textarea {
 .search-right input:hover{
   border:grey;
   transition: all 0.5s;
+}
+
+.btn-layout-details-details{
+  margin-left:auto;
+  margin-right:auto;
+  margin-bottom:20px;
+}
+
+.btn-layout-details-reject{
+  margin-left:20%;
+  margin-right:20%;
+  margin-top:20px;
+  position: relative;
+}
+
+.btn-layout-details-details .reject{
+  border-radius: 10px;
+  border:none;
+  background-color:red;
+  font-weight: 550;
+  padding:10px 25px;
+  margin-right: 20px;
+  color:white;
+}
+
+.btn-layout-details-details .reject:hover:enabled{
+  background-color: #AD0606;
+  transition: all 0.5s;
+}
+
+.btn-layout-details-details .accept{
+  border-radius: 10px;
+  border:none;
+  background-color:#50DF1E;
+  font-weight: 550;
+  padding:10px 25px;
+  margin-right: 20px;
+  color:white;
+}
+
+.btn-layout-details-details .accept:hover:enabled{
+  background-color: green;
+  transition: all 0.5s;
+}
+
+.track{
+  display:flex;
+  margin-bottom:20px;
+  margin-left:auto;
+  margin-right: auto;
+}
+
+.layout-btn-track{
+  margin-top:14px;
+  margin-bottom:9px;
+  margin-right:20px;
+}
+
+.btn-track{
+  font-weight: 600;
+  border-radius:5px;
+  border:1px solid #DDC892;
+  background-color:#DDC892;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  padding: 10px 45px;
+  width: auto;
+  font-size: 16px;
+  transition: all 0.5s;
+}
+
+.add-product{
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  border: solid 1px grey;
+}
+
+.add-product-details{
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
+.button-add-product{
+  margin: 0 auto !important;
+  display: block !important;
+  float: none !important;
+  width: fit-content;
+}
+
+.button-add-product .kembali{
+  margin-bottom:20px;
+  border-radius:10px;
+  margin-left:10px;
+}
+
+.button-add-product .edit-add{
+  margin-bottom:20px;
+  border-radius:10px;
+  margin-left:10px;
 }

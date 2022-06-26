@@ -8,13 +8,14 @@ if(!isset($_SESSION["signin"])){
 
 $shipping = query("SELECT cp.invoice_id, cp.order_date, u.full_name as user, s.recipient, 
 CONCAT(s.address, ' ', s.district, ' ', s.city, ' ',s.province) as address, 
-FORMAT(sum(cp.total_price),0) as total_price, cp.resi
+FORMAT(sum(cp.total_price),0) as total_price, cp.resi, cp.proof_payment
 from cart_payment cp
 left join user u on u.user_id = cp.user_id
 left join shipping s on s.invoice_id = cp.invoice_id
 where cp.status_order = 'Delivery'
 group by cp.invoice_id
 order by cp.order_date DESC");
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -44,6 +45,7 @@ order by cp.order_date DESC");
             <th>Address</th>
             <th>Total Price</th>
             <th>Status</th>
+            <th>Bukti Transfer</th>
         </tr>
 
         <?php $i=1;?>
@@ -61,7 +63,7 @@ order by cp.order_date DESC");
                 <a href="detailsorder.php?invoice_id=<?= $ship["invoice_id"];?><?php $_SESSION["menu"]="delivery";?>">Details</a> |
                 <a href="https://cekresi.com/?noresi=<?= $ship["resi"];?>" target='_blank'>Track</a>
             </td>
-
+            <td><?=$ship["proof_payment"];?></td>
         </tr>
         <?php $i++;?>
         <?php endforeach;?>
