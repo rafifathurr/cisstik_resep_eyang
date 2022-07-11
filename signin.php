@@ -2,6 +2,7 @@
 
 require 'function/function.php';
 
+// Check session for signin
 if(isset($_SESSION["signin"])){
    header("Location: index.php");
    exit;
@@ -75,7 +76,8 @@ if(isset($_POST["signin"])){
          $_SESSION["email"] = '';
          echo "
          <script type='text/javascript'>
-            setTimeout(function () { Swal.fire('Login Failed!', 
+            setTimeout(function () { 
+               Swal.fire('Login Failed!', 
                'Invalid Email or Password!', 
                'error')}, 100);
             </script>
@@ -85,7 +87,8 @@ if(isset($_POST["signin"])){
       $_SESSION["email"] = '';
          echo "
          <script type='text/javascript'>
-            setTimeout(function () { Swal.fire('Login Failed!', 
+            setTimeout(function () { 
+               Swal.fire('Login Failed!', 
                'Your Email Not Register!', 
                'error')}, 100);
             </script>

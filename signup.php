@@ -30,14 +30,6 @@ if(isset($_POST["register"])){
                         window.location = 'index.php';
                              });}, 100);
                </script>";
-        }else{
-            echo "
-            <script type='text/javascript'>
-            Swal.fire('Sign Up Fail!', 
-            'Please Sign Up Again!', 
-            'error')
-            </script>
-            ";
         }
 }
 

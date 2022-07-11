@@ -180,25 +180,41 @@ function registrasi($data){
    $result = mysqli_query($conn, $query_user);
 
    if(mysqli_fetch_assoc($result)){
-       echo "
-       <script>
-           alert('Email Sudah Terdaftar!');
-           document.location.href = 'signup.php'
-       </script>
-       ";
+    echo "
+    <script type='text/javascript'>
+       setTimeout(function () { 
+          let timerInterval
+          Swal.fire({
+             title: 'Sign Up Fails!',
+             text: 'Email Registered!',
+             icon: 'error',
+             type: 'error',
+             showConfirmButton: false
+         })
+             .then(function () {
+                window.location = 'signup.php';
+                     });}, 100);
+       </script>";
        return false;
    }
 
    // Cek confirmation password
    if($password !== $password2){
-       echo "
-       <script type='text/javascript'>
-         setTimeout(function () { 
-            Swal.fire('Sign Up Fail!', 
-            'Password not Match!', 
-            'error');},100);
-            </script>
-       ";
+    echo "
+    <script type='text/javascript'>
+       setTimeout(function () { 
+          let timerInterval
+          Swal.fire({
+             title: 'Sign Up Fails!',
+             text: 'Password not Match!',
+             icon: 'error',
+             type: 'error',
+             showConfirmButton: false
+         })
+             .then(function () {
+                window.location = 'signup.php';
+                     });}, 100);
+       </script>";
        return false;
    }
 
@@ -308,7 +324,7 @@ function uploadpayment($data){
     $statusorder = "waiting for confirm";
     
     // Upload gambar
-    $gambar = upload();
+    $gambar = upload($invoice);
     if(!$gambar){
         return false;
     }
@@ -378,7 +394,7 @@ function delivery($data){
 }
 
 // upload image
-function upload(){
+function upload($invoice){
     
     $namaFile = $_FILES['upload']['name'];
     $ukuranFile = $_FILES['upload']['size'];
@@ -414,7 +430,7 @@ function upload(){
 
     // Upload gambar setelah pengecekan
     // generate nama file baru
-    $namaFileBaru = 'bukti_transfer_'.$namaFile;
+    $namaFileBaru = 'bukti_transfer_'.$invoice;
     $namaFileBaru .= '.';
     $namaFileBaru .= $extensiPict;
 
@@ -477,6 +493,29 @@ function addproduct($data){
     $ordering = (int)stripslashes($data["order"]);
     $status = "ready";
 
+    // Cek ordering product
+   $query_user = "SELECT * FROM product WHERE order_id = '$ordering'";
+   $result = mysqli_query($conn, $query_user);
+
+   if(mysqli_fetch_assoc($result)){
+    echo "
+    <script type='text/javascript'>
+       setTimeout(function () { 
+          let timerInterval
+          Swal.fire({
+             title: 'Add Product Fails!',
+             text: 'Ordering Already Available!',
+             icon: 'error',
+             type: 'error',
+             showConfirmButton: false
+         })
+             .then(function () {
+                window.location = 'products.php';
+                     });}, 100);
+       </script>";
+       return false;
+   }else{
+
     // Upload gambar
     $gambar = uploadproduct();
     if(!$gambar){
@@ -490,6 +529,7 @@ function addproduct($data){
         mysqli_query($conn, $query);
  
         return mysqli_affected_rows($conn);
+    }
 }
 
 // remove item on cart
@@ -519,41 +559,14 @@ function updateproduct($data){
         return false;
     }
 
-        // Insert data cart to database
-        $query = "UPDATE product SET
-                   picture = '$gambar', product = '$product', price = '$price',
-                   status = '$status', order_id = '$ordering' WHERE id = '$id'";
-        mysqli_query($conn, $query);
- 
-        return mysqli_affected_rows($conn);
-}
+    // Insert data cart to database
+    $query = "UPDATE product SET
+               picture = '$gambar', product = '$product', price = '$price',
+               status = '$status', order_id = '$ordering' WHERE id = '$id'";
+    mysqli_query($conn, $query);
 
-function notification($notif){
-    if($notif===0){
-        echo"";
-    }elseif($notif<10){
-        echo "<div class='notification-cart' 
-        style=' 
-        padding-top:2px;
-        padding-bottom:2px;
-        padding-left:8px;
-        padding-right:8px;'> $notif </div>";
-     }elseif($notif>9){
-        echo "<div class='notification-cart' 
-        style=' 
-        padding-top:4px;
-        padding-bottom:4px;
-        padding-left:6px;
-        padding-right:6px;'> $notif </div>";
-     }elseif($notif>100){
-        echo "<div class='notification-cart' 
-        style=' 
-        padding-top:10px;
-        padding-bottom:10px;
-        padding-left:5px;
-        padding-right:5px;'> $notif </div>";
-     }
-}
+    return mysqli_affected_rows($conn);
+   }
 
 
 ?>

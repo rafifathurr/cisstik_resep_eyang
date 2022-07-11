@@ -33,7 +33,7 @@ if(!isset($_SESSION["signin"])){
             left join shipping s on s.invoice_id = cp.invoice_id
             where (cp.status_order != 'cart' and cp.status_order != 'checkout' and cp.status_order != 'wait payment') and cp.user_id = $id
             group by cp.invoice_id
-            order by cp.order_date DESC");
+            order by cp.id DESC");
             
             ?>
 

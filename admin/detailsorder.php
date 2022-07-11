@@ -244,7 +244,7 @@ if($_SESSION["menu"]=="neworder"){
          
          <?php else:?>
          <div class="btn-layout-details">
-            <button typw="button" class="accept" name="deliv" disabled>ON DELIVERY</button>
+            <button type="button" class="accept" name="deliv" disabled>ON DELIVERY</button>
          </div>
             <?php endif;?>
       </div>

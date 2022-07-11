@@ -1,15 +1,20 @@
 <?php 
 require 'function/function.php';
-$product = query("SELECT * FROM product ORDER BY order_id ASC");
+$product = query("SELECT * FROM product WHERE status = 'Ready' ORDER BY order_id ASC");
 
 if(isset($_POST["add"])){
-   if(addcart($_POST)>0){
+   if(!isset($_SESSION["signin"])){
       header("Location: cart.php");
       exit;
    }else{
-      echo "
-      GAGAL
-      ";
+      if(addcart($_POST)>0){
+         header("Location: cart.php");
+         exit;
+      }else{
+         echo "
+         GAGAL
+         ";
+      }
    }
 }
 

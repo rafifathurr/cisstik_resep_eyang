@@ -14,7 +14,7 @@ left join user u on u.user_id = cp.user_id
 left join shipping s on s.invoice_id = cp.invoice_id
 where cp.status_order = 'Delivery'
 group by cp.invoice_id
-order by cp.order_date DESC");
+order by cp.id DESC");
 
 ?>
 <!DOCTYPE html>

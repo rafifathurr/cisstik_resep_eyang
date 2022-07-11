@@ -12,16 +12,20 @@ if(isset($_POST["payment"])){
    if(addshipping($_POST)>0){
       $_SESSION["payment"] = true;
       echo "
-        <script type='text/javascript'>
-        setTimeout(function () { Swal.fire('Checkout Successfully', 
-           'Please Do Payment!', 
-           'success').then(function (result) {
-           if (result.value) {
-              window.location = 'payment.php';
-              }
-        })}, 100);
-        </script>
-        ";
+            <script type='text/javascript'>
+               setTimeout(function () { 
+                  let timerInterval
+                  Swal.fire({
+                     title: 'Checkout Successfully',
+                     text: 'Please Do Payment!',
+                     icon: 'success',
+                     type: 'success',
+                     showConfirmButton: false
+                 })
+                     .then(function () {
+                        window.location = 'payment.php';
+                             });}, 100);
+               </script>";
    }else{
       echo "
       GAGAL

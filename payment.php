@@ -14,16 +14,20 @@ if(isset($_POST["btn_verif_pay"])){
 
    if(uploadpayment($_POST)>0){
       echo "
-        <script type='text/javascript'>
-        setTimeout(function () { Swal.fire('Payment Successfully', 
-           'Please Wait Until We Accept Your Order!', 
-           'success').then(function (result) {
-           if (result.value) {
-              window.location = 'index.php';
-              }
-        })}, 100);
-        </script>
-        ";
+      <script type='text/javascript'>
+         setTimeout(function () { 
+            let timerInterval
+            Swal.fire({
+               title: 'Payment Successfully',
+               text: 'Please Wait Until We Accept Your Order!',
+               icon: 'success',
+               type: 'success',
+               showConfirmButton: false
+           })
+               .then(function () {
+                  window.location = 'index.php';
+                       });}, 100);
+         </script>";
    }else{
    }
 }

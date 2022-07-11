@@ -4,47 +4,48 @@ require 'function/function.php';
 if(!isset($_SESSION["signin"])){
    header("Location: signin.php");
    exit;
+}else{
+   if(isset($_POST["remove"])){
+      if(removecart($_POST)>0){
+      }else{
+         echo "
+         GAGAL
+         ";
+      }
+   }
+   if(isset($_POST["add"])){
+      if(addcart($_POST)>0){
+      }else{
+         echo "
+         GAGAL
+         ";
+      }
+   }
+   if(isset($_POST["minus"])){
+      if(minus($_POST)>0){
+      }else{
+         echo "
+         GAGAL
+         ";
+      }
+   }
+   if(isset($_POST["checkout"])){
+      if(checkout($_POST)>0){
+         $_SESSION["checkout"] = true;
+         header("Location: checkout.php");
+         exit;
+      }else{
+         echo "
+            <script type='text/javascript'>
+               setTimeout(function () { Swal.fire('Please Add Product First!', 
+                  '', 
+                  'error')}, 100);
+               </script>
+         ";
+      }
+   }
 }
 
-if(isset($_POST["remove"])){
-   if(removecart($_POST)>0){
-   }else{
-      echo "
-      GAGAL
-      ";
-   }
-}
-if(isset($_POST["add"])){
-   if(addcart($_POST)>0){
-   }else{
-      echo "
-      GAGAL
-      ";
-   }
-}
-if(isset($_POST["minus"])){
-   if(minus($_POST)>0){
-   }else{
-      echo "
-      GAGAL
-      ";
-   }
-}
-if(isset($_POST["checkout"])){
-   if(checkout($_POST)>0){
-      $_SESSION["checkout"] = true;
-      header("Location: checkout.php");
-      exit;
-   }else{
-      echo "
-         <script type='text/javascript'>
-            setTimeout(function () { Swal.fire('Please Add Product First!', 
-               '', 
-               'error')}, 100);
-            </script>
-      ";
-   }
-}
 
 ?>
 <!DOCTYPE html>
