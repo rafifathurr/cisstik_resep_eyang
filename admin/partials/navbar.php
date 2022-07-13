@@ -22,6 +22,9 @@
                         <li <?php echo ($currentPage == 'Products') ? "class='nav-item active'" : "class='nav-item'"; ?>>
                            <a class="nav-link" href="products.php">Products</a>
                         </li>
+                        <li <?php echo ($currentPage == 'Confirmed') ? "class='nav-item active'" : "class='nav-item'"; ?>>
+                           <a class="nav-link" href="confirmed.php">Confirmed</a>
+                        </li>
                         <li class="nav-item">
                            <a class="nav-link" style="color:red;" href="signout.php">
                               LOG OUT

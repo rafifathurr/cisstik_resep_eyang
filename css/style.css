@@ -223,7 +223,7 @@ margin-left: auto;
 }
 
 .custom_nav-container .navbar-nav .nav-item .nav-link {
-  padding: 6px 15px;
+  padding: 6px 10px;
   color: #131313;
   text-align: center;
   text-transform: uppercase;
@@ -231,6 +231,7 @@ margin-left: auto;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
   font-weight: 700;
+  font-size:15px;
 }
 
 .custom_nav-container .navbar-nav .nav-item .nav-link-logout{
