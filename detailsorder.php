@@ -127,6 +127,10 @@ if(!isset($_SESSION["signin"])){
             <a href="https://cekresi.com/?noresi=<?=$order["resi"];?>" class="layout-btn-track" target ="_blank">
                <input type="submit" class="btn-track" value="TRACK SHIPPING">
             </a>
+            <form action="" method="POST" class="layout-btn-track">
+               <input type="hidden" name="invoice" id="id">
+               <button class="btn-confirm" name="confirm" >CONFIRMED ORDER</button>
+            </form>
             </div>
          <?php endif;?>
 

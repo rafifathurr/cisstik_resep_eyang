@@ -231,7 +231,7 @@ margin-left: auto;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
   font-weight: 700;
-  font-size:15px;
+  font-size:13px;
 }
 
 .custom_nav-container .navbar-nav .nav-item .nav-link-logout{
@@ -2391,6 +2391,19 @@ form textarea {
   width: auto;
   font-size: 16px;
   transition: all 0.5s;
+}
+
+.btn-confirm{
+  font-weight: 600;
+  border-radius:5px;
+  border:1px solid green;
+  background-color:green;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  padding: 10px 30px;
+  width: auto;
+  font-size: 16px;
+  transition: all 0.5s;
+  color:white;
 }
 
 .add-product{

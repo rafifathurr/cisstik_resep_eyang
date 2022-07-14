@@ -89,15 +89,10 @@ if(!isset($_SESSION["signin"])){
                    };?>>
                   <?=$my["status_order"];?> </td>
                   <td>
-                     <?php if($my["status_order"]=='Delivery'):?>
                         <form action="" method="post">
                            <input type="hidden" id="id_order" value="<?=$my["invoice_id"]?>">
-                           <a href="detailsorder.php?invoice_id=<?= $my["invoice_id"];?>">Details</a> |
-                           <a href="https://cekresi.com/?noresi=<?= $my["resi"];?>" target="_blank">Track</a>
+                           <a href="detailsorder.php?invoice_id=<?= $my["invoice_id"];?>">Details</a> 
                         </form>
-                     <?php else:?>
-                        <a href="detailsorder.php?invoice_id=<?= $my["invoice_id"];?>">Details</a> 
-                     <?php endif;?>
                   </td>
                </tr>
                <?php $i++;?>

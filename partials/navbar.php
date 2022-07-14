@@ -43,7 +43,7 @@ $id = id($mail);
                         <?php echo '<li class="nav-item">
                            <a class="nav-link" href="account.php" name="account">
                               <img width="35" src="images/user.png" alt="#" />
-                              <text style="margin: auto 10px;">'.name($mail).'</text>
+                              <text style="margin: auto 10px; font-size:13px;">'.name($mail).'</text>
                            </a> 
                         </li>';?>
                         <?php else:?>
