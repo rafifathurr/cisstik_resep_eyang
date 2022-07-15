@@ -212,7 +212,7 @@ if($_SESSION["menu"]=="neworder"){
                      <?php if($ship["gambar"]!=''):?>
                      <div class="desc">
                         <h6>Proof Receipt Order : </h6>
-                        <h6><a href="download_bukti.php?filename=<?php echo $ship["bukti"];?>"><?php echo $ship["bukti"];?></a></h6>
+                        <h6><a href="download_bukti_penerimaan.php?filename=<?php echo $ship["bukti"];?>"><?php echo $ship["bukti"];?></a></h6>
                      </div>
                      <?php endif;?> 
                   </div>
