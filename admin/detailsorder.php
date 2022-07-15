@@ -211,8 +211,13 @@ if($_SESSION["menu"]=="neworder"){
                      </div>
                      <?php if($ship["gambar"]!=''):?>
                      <div class="desc">
+                     <?php if($_SESSION["menu"]=="confirmed"):?>
                         <h6>Proof Receipt Order : </h6>
                         <h6><a href="download_bukti_penerimaan.php?filename=<?php echo $ship["bukti"];?>"><?php echo $ship["bukti"];?></a></h6>
+                     <?php else:?> 
+                        <h6>Approval : </h6>
+                        <h6><a href="download_bukti.php?filename=<?php echo $ship["gambar"];?>"><?php echo $ship["gambar"];?></a></h6>
+                     <?php endif;?> 
                      </div>
                      <?php endif;?> 
                   </div>
