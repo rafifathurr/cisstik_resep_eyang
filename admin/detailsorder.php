@@ -138,6 +138,26 @@ if($_SESSION["menu"]=="neworder"){
    left join product p on p.id = cp.product_id
    where cp.status_order = 'Delivery'and cp.invoice_id = $invoice
    group by cp.product_id, cp.invoice_id order by cp.id asc");
+
+}else if($_SESSION["menu"]=="confirmed"){
+   // $order = "neworder";
+   $invoice = $_GET["invoice_id"];
+   $shipping = query("SELECT cp.invoice_id, s.recipient, cp.order_date, CONCAT(s.address, ' ', s.district, ' ', s.city, ' ',s.province) as address, u.full_name as user, cp.proof_payment as gambar, pr.reciept_item as bukti
+   from cart_payment cp
+   left join user u on u.user_id = cp.user_id
+   left join shipping s on s.invoice_id = cp.invoice_id
+   left join proof_receipt pr on pr.invoice_id = cp.invoice_id
+   where cp.status_order = 'Confirmed' and cp.invoice_id = $invoice
+   group by cp.invoice_id");
+   
+   $details = query("SELECT CASE WHEN cp.product_id != 0 THEN p.product 
+   WHEN cp.product_id = 0 THEN 'Ongkos Kirim' END as product, 
+   FORMAT(cp.price,0) as price, sum(cp.qty) as qty , FORMAT(sum(cp.total_price),0) as total_price, cp.proof_payment as gambar
+   from cart_payment cp
+   left join product p on p.id = cp.product_id
+   where cp.status_order = 'Confirmed'and cp.invoice_id = $invoice
+   group by cp.product_id, cp.invoice_id order by cp.id asc");
+
 }
 
 
@@ -191,14 +211,15 @@ if($_SESSION["menu"]=="neworder"){
                      </div>
                      <?php if($ship["gambar"]!=''):?>
                      <div class="desc">
-                        <h6>Approval : </h6>
-                        <h6><a href="download_bukti.php?filename=<?php echo $ship["gambar"];?>"><?php echo $ship["gambar"];?></a></h6>
+                        <h6>Proof Receipt Order : </h6>
+                        <h6><a href="download_bukti.php?filename=<?php echo $ship["bukti"];?>"><?php echo $ship["bukti"];?></a></h6>
                      </div>
                      <?php endif;?> 
                   </div>
                </div>
             </div>
             <?php endforeach;?>
+            
 
             <table cellpadding="10" cellspacing="1" border="1" style="background-color:white;">
                <tr>
@@ -241,12 +262,15 @@ if($_SESSION["menu"]=="neworder"){
                   <button class="reject" name="rejected" >REJECT</button>
                </div>
             </form>
-         
-         <?php else:?>
+         <?php elseif($_SESSION["menu"]=="delivery"):?>
          <div class="btn-layout-details">
             <button type="button" class="accept" name="deliv" disabled>ON DELIVERY</button>
          </div>
-            <?php endif;?>
+         <?php elseif($_SESSION["menu"]=="confirmed"):?>
+         <div class="btn-layout-details">
+            <button type="button" class="accept" name="deliv" disabled>CONFIRMED</button>
+         </div>
+         <?php endif;?>
       </div>
       
        <!-- include footer -->

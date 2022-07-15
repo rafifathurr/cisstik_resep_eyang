@@ -2396,8 +2396,8 @@ form textarea {
 .btn-confirm{
   font-weight: 600;
   border-radius:5px;
-  border:1px solid green;
-  background-color:green;
+  border:1px solid #50DF1E;
+  background-color:#50DF1E;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   padding: 10px 30px;
   width: auto;

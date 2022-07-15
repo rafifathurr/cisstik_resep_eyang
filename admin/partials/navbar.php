@@ -19,11 +19,11 @@
                         <li <?php echo ($currentPage == 'Shipping Order') ? "class='nav-item active'" : "class='nav-item'"; ?>>
                            <a class="nav-link" href="shipping.php">Shipping</a>
                         </li>
-                        <li <?php echo ($currentPage == 'Products') ? "class='nav-item active'" : "class='nav-item'"; ?>>
-                           <a class="nav-link" href="products.php">Products</a>
-                        </li>
                         <li <?php echo ($currentPage == 'Confirmed') ? "class='nav-item active'" : "class='nav-item'"; ?>>
                            <a class="nav-link" href="confirmed.php">Confirmed</a>
+                        </li>
+                        <li <?php echo ($currentPage == 'Products') ? "class='nav-item active'" : "class='nav-item'"; ?>>
+                           <a class="nav-link" href="products.php">Products</a>
                         </li>
                         <li class="nav-item">
                            <a class="nav-link" style="color:red;" href="signout.php">

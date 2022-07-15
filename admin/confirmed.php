@@ -8,7 +8,7 @@ if(!isset($_SESSION["signin"])){
 
 $shipping = query("SELECT cp.invoice_id, cp.order_date, u.full_name as user, s.recipient, 
 CONCAT(s.address, ' ', s.district, ' ', s.city, ' ',s.province) as address, 
-FORMAT(sum(cp.total_price),0) as total_price, cp.resi, cp.proof_payment
+FORMAT(sum(cp.total_price),0) as total_price, cp.resi, cp.status_order
 from cart_payment cp
 left join user u on u.user_id = cp.user_id
 left join shipping s on s.invoice_id = cp.invoice_id
@@ -50,8 +50,8 @@ order by cp.id DESC");
 
         <?php $i=1;?>
         <!-- Menampilkan data dari database menggunakan PHP -->
-        <!-- <?php foreach($shipping as $ship): ?> -->
-        <!-- <tr>
+        <?php foreach($shipping as $ship): ?>
+        <tr>
             <td><?php echo $i;?></td>
             <td><?=$ship["order_date"];?></td>
             <td>INV/<?=$ship["invoice_id"];?>/<?=$ship["order_date"];?></td>
@@ -59,14 +59,13 @@ order by cp.id DESC");
             <td><?=$ship["recipient"];?></td>
             <td><?=$ship["address"];?></td>
             <td style="text-align:right;">Rp. <?=$ship["total_price"];?>,-</td>
+            <td><?=$ship["status_order"];?></td>
             <td>
-                <a href="detailsorder.php?invoice_id=<?= $ship["invoice_id"];?><?php $_SESSION["menu"]="delivery";?>">Details</a> |
-                <a href="https://cekresi.com/?noresi=<?= $ship["resi"];?>" target='_blank'>Track</a>
+                <a href="detailsorder.php?invoice_id=<?= $ship["invoice_id"];?><?php $_SESSION["menu"]="confirmed";?>">Details</a>
             </td>
-            <td><?=$ship["proof_payment"];?></td>
-        </tr> -->
-        <!-- <?php $i++;?>
-        <?php endforeach;?> -->
+        </tr>
+        <?php $i++;?>
+        <?php endforeach;?>
     </table>
 
          </section>

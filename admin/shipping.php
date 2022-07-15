@@ -44,8 +44,7 @@ order by cp.id DESC");
             <th>Recepient</th>
             <th>Address</th>
             <th>Total Price</th>
-            <th>Status</th>
-            <th>Bukti Transfer</th>
+            <th>Action</th>
         </tr>
 
         <?php $i=1;?>
@@ -63,7 +62,6 @@ order by cp.id DESC");
                 <a href="detailsorder.php?invoice_id=<?= $ship["invoice_id"];?><?php $_SESSION["menu"]="delivery";?>">Details</a> |
                 <a href="https://cekresi.com/?noresi=<?= $ship["resi"];?>" target='_blank'>Track</a>
             </td>
-            <td><?=$ship["proof_payment"];?></td>
         </tr>
         <?php $i++;?>
         <?php endforeach;?>

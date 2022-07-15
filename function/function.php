@@ -440,6 +440,52 @@ function upload($invoice){
 }
 
 // upload image
+function uploadreceipt($invoice){
+    
+    $namaFile = $_FILES['upload']['name'];
+    $ukuranFile = $_FILES['upload']['size'];
+    $error = $_FILES['upload']['error'];
+    $tmpName = $_FILES['upload']['tmp_name'];
+
+    // Cek apakah tidak ada gambar yang diupload
+    if( $error === 4){ 
+        echo "<script>
+                alert('Please Upload!')
+                </script>";
+        return false;        
+    }
+
+    // Cek apakah yang diupload adalah gambar
+    $extensionGambar = ['jpg', 'jpeg', 'png'];
+    $extensiPict = explode('.', $namaFile);
+    $extensiPict = strtolower(end($extensiPict));
+    if( !in_array($extensiPict,$extensionGambar)){
+        echo "<script>
+                alert('Choose image only!')
+                </script>";
+        return false;  
+    }
+
+    // cek jika ukurannya terlalu besar
+    if($ukuranFile > 20000000){
+        echo "<script>
+                alert('Size Image Min 20 MB !')
+                </script>";
+        return false; 
+    }
+
+    // Upload gambar setelah pengecekan
+    // generate nama file baru
+    $namaFileBaru = 'bukti_penerimaan_barang_'.$invoice;
+    $namaFileBaru .= '.';
+    $namaFileBaru .= $extensiPict;
+
+    move_uploaded_file($tmpName, 'bukti_penerimaan_barang/' . $namaFileBaru);
+
+    return $namaFileBaru;
+}
+
+// upload image
 function uploadproduct(){
     
     $namaFile = $_FILES['upload']['name'];
@@ -566,6 +612,31 @@ function updateproduct($data){
     mysqli_query($conn, $query);
 
     return mysqli_affected_rows($conn);
+   }
+
+function confirmitem($data){
+    global $conn;
+
+    $invoice = (int)stripslashes($data["invoice"]);
+    $status = "Confirmed";
+
+    // Upload gambar
+    $gambar = uploadreceipt($invoice);
+    if(!$gambar){
+        return false;
+    }
+
+    $query = "UPDATE cart_payment SET status_order 
+                = '$status'
+                WHERE invoice_id =  '$invoice' and status_order ='Delivery'";
+    mysqli_query($conn, $query);
+
+    $query_2 = "INSERT INTO proof_receipt VALUES
+                ('','$invoice','$gambar')";
+    mysqli_query($conn, $query_2);
+
+    return mysqli_affected_rows($conn);
+
    }
 
 

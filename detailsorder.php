@@ -4,6 +4,35 @@ if(!isset($_SESSION["signin"])){
    header("Location: signin.php");
    exit;
 }
+
+if(isset($_POST["confirm"])){
+   $_SESSION["menu"]="confirm";
+}
+
+if(isset($_POST["back"])){
+   $_SESSION["menu"]="";
+}
+
+if(isset($_POST["acc"])){
+   if(confirmitem($_POST)>0){
+      echo "
+      <script type='text/javascript'>
+         setTimeout(function () { 
+            let timerInterval
+            Swal.fire({
+               title: 'Upload Receipt Items Successfully!',
+               text: 'Thank You for Shopping',
+               icon: 'success',
+               type: 'success',
+               showConfirmButton: false
+           })
+               .then(function () {
+                  window.location = 'index.php';
+                       });}, 100);
+         </script>";
+   }
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -121,17 +150,29 @@ if(!isset($_SESSION["signin"])){
             <?php endif;?>
                
          </section>
-
+         <?php if($_SESSION["menu"]=="confirm"):?>
+            <div class="btn-layout-details-reject">
+            <form action="" method="POST" enctype="multipart/form-data">
+               <input type="hidden" name="invoice" id="id" value="<?=$invoice?>">
+               <label for="upload">Upload Receipt of Order</label>
+               <input type="file" name="upload" id="upload">
+               </div>
+               <div class="btn-layout-details-details">
+                  <button class="reject" name="back" >BACK</button>
+                  <button class="accept" name="acc" >CONFIRM</button>
+               </div>
+            </form>
+            <?php else:?>
          <?php if($order["status_order"] == 'Delivery'):?>
             <div class="track">
             <a href="https://cekresi.com/?noresi=<?=$order["resi"];?>" class="layout-btn-track" target ="_blank">
                <input type="submit" class="btn-track" value="TRACK SHIPPING">
             </a>
             <form action="" method="POST" class="layout-btn-track">
-               <input type="hidden" name="invoice" id="id">
-               <button class="btn-confirm" name="confirm" >CONFIRMED ORDER</button>
+               <button class="btn-confirm" name="confirm" >CONFIRM ORDER</button>
             </form>
             </div>
+         <?php endif;?>
          <?php endif;?>
 
             

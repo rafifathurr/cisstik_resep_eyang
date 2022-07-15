@@ -51,6 +51,7 @@ if(!isset($_SESSION["signin"])){
                   <option value="waiting for confirm">Waiting For Confirm</option>
                   <option value="On Process">On Process</option>
                   <option value="Delivery">On Delivery</option>
+                  <option value="Confirmed">Confirmed</option>
                   <option value="cancel">Cancel</option>
                </select> 
                <button onclick="filter()">FILTER</button>
@@ -91,7 +92,7 @@ if(!isset($_SESSION["signin"])){
                   <td>
                         <form action="" method="post">
                            <input type="hidden" id="id_order" value="<?=$my["invoice_id"]?>">
-                           <a href="detailsorder.php?invoice_id=<?= $my["invoice_id"];?>">Details</a> 
+                           <a href="detailsorder.php?invoice_id=<?= $my["invoice_id"];?><?php $_SESSION["menu"]="order";?>">Details</a> 
                         </form>
                   </td>
                </tr>
